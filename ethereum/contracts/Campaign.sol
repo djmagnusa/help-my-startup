@@ -14,6 +14,8 @@ contract Campaign {
     Request[] public requests;
     address public manager;
     uint public minimumContribution;
+    mapping(address => bool) public approvers;
+    uint public approversCount;
 
       modifier restricted() {
         require(msg.sender == manager);
@@ -48,6 +50,17 @@ contract Campaign {
         
         requests.push(newRequest);
     } 
+
+     
+    function approveRequest(uint index) public {
+        Request storage request = requests[index];
+        
+        require(approvers[msg.sender]); //making sure person is donator
+        require(!request.approvals[msg.sender]); //checking if person already voted, if yes exit
+        
+        request.approvals[msg.sender] = true;
+        request.approvalCount++; //the request got one vote
+    }
     
 
 }
