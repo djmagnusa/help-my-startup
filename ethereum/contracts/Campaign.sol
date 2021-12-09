@@ -52,7 +52,7 @@ contract Campaign {
     } 
 
      
-    function approveRequest(uint index) public {
+    function approveRequest(uint index) public { //to approve request at a particular index
         Request storage request = requests[index];
         
         require(approvers[msg.sender]); //making sure person is donator
@@ -61,6 +61,16 @@ contract Campaign {
         request.approvals[msg.sender] = true;
         request.approvalCount++; //the request got one vote
     }
-    
+
+     function finalizeRequest(uint index) public restricted {
+        Request storage request = requests[index];
+        
+        require(request.approvalCount > (approversCount/2));
+        require(!request.complete); //if request is already completed exit
+        
+        
+        request.recipient.transfer(request.value);
+        request.complete = true;
+    }   
 
 }
