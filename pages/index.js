@@ -33,12 +33,15 @@ class CampaignIndex extends Component {
                 />
                 <script src="https://cdn.jsdelivr.net/npm/semantic-ui-react/dist/umd/semantic-ui-react.min.js"></script>
                 <h3>Open Campaigns</h3>
-                {this.renderCampaigns()}
+                
                 <Button 
+                    floated="right"
                     content="Create campaign"
                     icon="add circle"
                     primary
                 />
+
+                {this.renderCampaigns()}
 
             </div>
         </Layout>
